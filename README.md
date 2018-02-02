@@ -5,6 +5,6 @@
 Recursos de R-Ladies Lima.
 
 ## Past events
-  1. **Primer Meetup de R-Ladies Lima**
-      - Miércoles 31 de enero de 2018, 7 pm
-      - Auditorio de AUCI, Pontificia Universidad Católica del Perú
+1. **Primer Meetup de R-Ladies Lima**
+    - Miércoles 31 de enero de 2018, 7 pm 
+    - Auditorio de AUCI, Pontificia Universidad Católica del Perú
