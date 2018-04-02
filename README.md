@@ -18,6 +18,5 @@ Recursos de R-Ladies Lima.
         * [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/20180315-RLadiesLima-Meetup2/RLadiesLima-Meetup2-PrimerosPasosR.pdf)
         * [Tutorial de Instalación](https://github.com/rladies/meetup-presentations_lima/blob/master/20180315-RLadiesLima-Meetup2/Instalación%20R%20y%20RStudio%20(Tutorial).pdf)
         * [Script General](https://github.com/rladies/meetup-presentations_lima/blob/master/20180315-RLadiesLima-Meetup2/Script-General.R)
-        * [Script Gráficas](https://github.com/rladies/meetup-presentations_lima/blob/master/20180315-RLadiesLima-Meetup2/Script-Graficas.R)
         * [Póster](https://github.com/rladies/meetup-presentations_lima/blob/master/20180315-RLadiesLima-Meetup2/RLadiesLima-Meetup2-Poster.pdf)
     
