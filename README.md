@@ -28,4 +28,10 @@ Recursos de R-Ladies Lima.
         * [Scripts](https://github.com/rladies/meetup-presentations_lima/tree/master/20180427-RLadiesLima-Meetup3/Scripts)
         * [Póster](https://github.com/rladies/meetup-presentations_lima/blob/master/20180427-RLadiesLima-Meetup3/RLadiesLima-Meetup3-Poster.pdf)
     
-    
+4. **Cuarto Meetup de R-Ladies Lima**
+    - Jueves 06 de diciembre de 2018, 7 pm
+    - Aula Informática DTI - Estudios Generales Letras, Pontificia Universidad Católica del Perú
+    - Reportes reproducibles con R ([Vilma Romero](https://vilmaromero.github.io)) 
+        * [Material del taller](https://github.com/VilmaRomero/R-Ladies-Lima-rmarkdown)
+        * [Póster](https://github.com/rladies/meetup-presentations_lima/blob/master/20181206-RLadiesLima-Meetup4/RLadiesLima-Meetup4-Poster.png)
+        
