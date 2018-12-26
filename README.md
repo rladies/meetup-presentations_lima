@@ -34,4 +34,12 @@ Recursos de R-Ladies Lima.
     - Reportes reproducibles con R ([Vilma Romero](https://vilmaromero.github.io)) 
         * [Material del taller](https://github.com/VilmaRomero/R-Ladies-Lima-rmarkdown)
         * [Póster](https://github.com/rladies/meetup-presentations_lima/blob/master/20181206-RLadiesLima-Meetup4/RLadiesLima-Meetup4-Poster.png)
-        
+
+5. **Quinto Meetup de R-Ladies Lima**
+    - Martes 18 de diciembre de 2018, 7 pm
+    - Centro Cultural CAFAE
+    - ¿Cómo ser un outlier en el mundo de los Data Scientists? ([Andrea Villanes](https://www.linkedin.com/in/andreavillanes/)) 
+        * [Presentación Andrea](https://github.com/rladies/meetup-presentations_lima/blob/master/20181218-RLadiesLima-Meetup5/Outlier_DataScientist.pdf)
+        * [Póster](https://github.com/rladies/meetup-presentations_lima/blob/master/20181206-RLadiesLima-Meetup4/RLadiesLima-Meetup5-Poster.png)
+    - [Clausura R-Ladies Lima](https://github.com/rladies/meetup-presentations_lima/blob/master/20181218-RLadiesLima-Meetup5/RLadiesLima-Clausura2018.pdf)
+         
