@@ -1,0 +1,110 @@
+library(foreign)
+getwd()
+
+
+#OPCI?N 1
+telco<-read.spss("telco.sav",use.value.labels=FALSE)
+head(telco)
+str(telco)
+
+telco$Producto<-as.factor(telco$Producto)
+telco$Estado_Civil<-as.factor(telco$Estado_Civil)
+telco$Sexo<-as.factor(telco$Sexo)
+telco$NSE_Cat<-as.factor(telco$NSE_Cat)
+telco$Segmento_Cat<-as.factor(telco$Segmento_Cat)
+telco$Prom_Flag_Premier_Cat<-as.factor(telco$Prom_Flag_Premier_Cat)
+telco$Edad_Cat<-as.factor(telco$Edad_Cat)
+telco$Plan_Cat<-as.factor(telco$Plan_Cat)
+telco$Portabilidad<-as.factor(telco$Portabilidad)
+
+head(telco, 6)
+str(telco)
+
+telco<-as.data.frame(telco)
+
+head(telco)
+str(telco)
+
+#OPCI?N 2
+telco<-read.spss("telco.sav",use.value.labels=FALSE,to.data.frame = TRUE)
+head(telco)
+str(telco)
+
+summary(telco)
+
+attach(telco)
+
+#An?lisis Bivariado
+
+plot(Portabilidad,Producto,xlab="Portabilidad",ylab="Producto") #ayudarÃ­a a explicar la portabilidad
+plot(Portabilidad,Estado_Civil,xlab="Portabilidad",ylab="Estado_Civil") #no ayudarÃ­a a explicar al portabilidad
+
+par(mfrow=c(2,4))
+plot(Portabilidad,Producto,xlab="Portabilidad",ylab="Producto")
+plot(Portabilidad,Estado_Civil,xlab="Portabilidad",ylab="Estado_Civil")
+plot(Portabilidad,Sexo,xlab="Portabilidad",ylab="Sexo")
+plot(Portabilidad,NSE_Cat,xlab="Portabilidad",ylab="NSE")
+plot(Portabilidad,Segmento_Cat,xlab="Portabilidad",ylab="Segmento")
+plot(Portabilidad,Prom_Flag_Premier_Cat,xlab="Portabilidad",ylab="Flag_Premier")
+plot(Portabilidad,Edad_Cat,xlab="Portabilidad",ylab="Edad") #puede ser que no ayudarÃ­a explicar la portabilidad, no discriman
+plot(Portabilidad,Plan_Cat,xlab="Portabilidad",ylab="Plan")
+par(mfrow=c(1,1))
+
+a<-chisq.test(Portabilidad,Producto) #son dep, entra al modelo
+names(a)
+a$parameter
+
+chisq.test(Portabilidad,Estado_Civil) #son dep, entra al modelo
+chisq.test(Portabilidad,Sexo) #no
+chisq.test(Portabilidad,NSE_Cat)#son dep, entra al modelo
+chisq.test(Portabilidad,Segmento_Cat) #no
+chisq.test(Portabilidad,Prom_Flag_Premier_Cat)#no
+chisq.test(Portabilidad,Edad_Cat)#no
+chisq.test(Portabilidad,Plan_Cat)#no
+
+#asumiendo, target se ubica en la Ãºltima columna
+prueba_chi1=function(data)
+{
+  k<-length(data)
+  pval=rep(0,k-1) #creo el array
+  for(i in 1:(k-1))
+    pval[i] <- chisq.test(data[,k],data[,i])$p.value
+  Variables<-names(data[-k])
+  p.value<-pval*100
+  print(data.frame(Variables,p.value))
+}
+
+prueba_chi1(telco[,2:10])
+
+# A Mayor indicador, mayor relaciÃ³n, se debe interpretar de acuerdo al p-value
+prueba_chi2=function(data)
+{
+  k<-length(data)
+  stat=rep(0,k-1)
+  for(i in 1:(k-1))
+    stat[i] <- chisq.test(data[,k],data[,i])$statistic
+  Variables<-names(data[-k])
+  statistic<-stat
+  print(data.frame(Variables,statistic))
+}
+
+prueba_chi2(telco[,2:10])
+
+#Partici?n de la muestra
+
+flag_muestra <- sample(2, nrow(telco), replace=TRUE, prob=c(0.70, 0.30))
+telco <- cbind(telco,flag_muestra)
+head(telco)
+str(telco)
+summary(telco)
+train<-subset(telco[,2:10],flag_muestra==1)
+test<-subset(telco[,2:10],flag_muestra==2)
+nrow(train)
+nrow(test)
+
+
+
+
+
+
+

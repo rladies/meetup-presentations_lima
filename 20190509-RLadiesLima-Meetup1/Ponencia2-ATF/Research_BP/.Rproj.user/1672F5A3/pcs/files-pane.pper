@@ -1,0 +1,21 @@
+{
+    "path" : "C:/Users/miguel_05/Desktop/Sherly/2018-2019/12. Tesis 2019/Exposición en el Banco Pichincha/Research_BP",
+    "sortOrder" : [
+        {
+            "ascending" : false,
+            "columnIndex" : 1
+        },
+        {
+            "ascending" : false,
+            "columnIndex" : 4
+        },
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        },
+        {
+            "ascending" : false,
+            "columnIndex" : 3
+        }
+    ]
+}

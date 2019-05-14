@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1557863513318.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "108536164",
+    "id" : "6BAFCB",
+    "lastKnownWriteTime" : 1557863400,
+    "last_content_update" : 1557863400,
+    "path" : "D:/DOC_ST/Sherly Tarazona/Meetup - R ladies Lima/Proyecto AT Sherly/Research_BP/Codigo.R",
+    "project_path" : "Codigo.R",
+    "properties" : {
+        "cursorPosition" : "4,0",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

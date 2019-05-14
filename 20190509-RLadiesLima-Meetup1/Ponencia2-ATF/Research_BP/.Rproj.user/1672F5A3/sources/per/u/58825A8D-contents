@@ -1,0 +1,205 @@
+
+install.packages("seriation")
+install.packages("miniCRAN", dependencies = T)
+install.packages("arules")
+install.packages("arulesViz", dependencies = T)
+
+
+library(seriation)
+library(miniCRAN)
+library(datasets)
+library(arules)
+library(arulesViz)
+library(methods)
+library(Matrix)
+
+datos3=subset(data_lima_5,data_lima_5$at_fatal==1)
+#library(sqldf)
+#install.packages("miniCRAN",dependencies = TRUE)
+str(datos3)
+dim(datos3)
+
+datos3$at_veh_mayor_involucrado_automovil<-as.numeric(datos3$at_veh_mayor_involucrado_automovil)
+datos3$at_veh_mayor_involucrado_stationwagon<-as.numeric(datos3$at_veh_mayor_involucrado_stationwagon)
+datos3$at_veh_mayor_involucrado_camionetapickup<-as.numeric(datos3$at_veh_mayor_involucrado_camionetapickup)
+datos3$at_veh_mayor_involucrado_camionetarural<-as.numeric(datos3$at_veh_mayor_involucrado_camionetarural)
+datos3$at_veh_mayor_involucrado_furgoneta<-as.numeric(datos3$at_veh_mayor_involucrado_furgoneta)
+datos3$at_veh_mayor_involucrado_omnibusurbano<-as.numeric(datos3$at_veh_mayor_involucrado_omnibusurbano)
+datos3$at_veh_mayor_involucrado_omnibusinterprov<-as.numeric(datos3$at_veh_mayor_involucrado_omnibusinterprov)
+datos3$at_veh_mayor_involucrado_camion<-as.numeric(datos3$at_veh_mayor_involucrado_camion)
+datos3$at_veh_mayor_involucrado_remolcador<-as.numeric(datos3$at_veh_mayor_involucrado_remolcador)
+datos3$at_veh_mayor_involucrado_trailer<-as.numeric(datos3$at_veh_mayor_involucrado_trailer)
+datos3$at_veh_mayor_involucrado_noidentificado<-as.numeric(datos3$at_veh_mayor_involucrado_noidentificado)
+datos3$at_veh_mayor_involucrado_otro<-as.numeric(datos3$at_veh_mayor_involucrado_otro)
+datos3$at_veh_menor_involucrado_motolineal<-as.numeric(datos3$at_veh_menor_involucrado_motolineal)
+datos3$at_veh_menor_involucrado_mototaxi<-as.numeric(datos3$at_veh_menor_involucrado_mototaxi)
+datos3$at_veh_menor_involucrado_triciclo<-as.numeric(datos3$at_veh_menor_involucrado_triciclo)
+datos3$at_veh_menor_involucrado_bicicleta<-as.numeric(datos3$at_veh_menor_involucrado_bicicleta)
+datos3$at_veh_menor_involucrado_noidentificado<-as.numeric(datos3$at_veh_menor_involucrado_noidentificado)
+datos3$at_tipo_transporte_publico<-as.numeric(datos3$at_tipo_transporte_publico)
+datos3$at_tipo_transporte_particular<-as.numeric(datos3$at_tipo_transporte_particular)
+datos3$at_tipo_transporte_noidentificado<-as.numeric(datos3$at_tipo_transporte_noidentificado)
+datos3$at_factor_excesovelocidad<-as.numeric(datos3$at_factor_excesovelocidad)
+datos3$at_factor_desobediencia_a_senal_de_transito<-as.numeric(datos3$at_factor_desobediencia_a_senal_de_transito)
+datos3$at_factor_faltailuminacion_en_la_via<-as.numeric(datos3$at_factor_faltailuminacion_en_la_via)
+datos3$at_factor_excesodecarga<-as.numeric(datos3$at_factor_excesodecarga)
+datos3$at_factor_ebriedad_conductor<-as.numeric(datos3$at_factor_ebriedad_conductor)
+datos3$at_factor_invasion_carril<-as.numeric(datos3$at_factor_invasion_carril)
+datos3$at_factor_fallamecanica<-as.numeric(datos3$at_factor_fallamecanica)
+datos3$at_factor_via_en_mal_estado<-as.numeric(datos3$at_factor_via_en_mal_estado)
+datos3$at_factor_imprudenciadel_peaton<-as.numeric(datos3$at_factor_imprudenciadel_peaton)
+datos3$at_factor_ebriedad_peaton<-as.numeric(datos3$at_factor_ebriedad_peaton)
+datos3$at_factor_climatico<-as.numeric(datos3$at_factor_climatico)
+datos3$at_factor_senalizacion_defectuosa<-as.numeric(datos3$at_factor_senalizacion_defectuosa)
+datos3$at_factor_casanciodel_conductor<-as.numeric(datos3$at_factor_casanciodel_conductor)
+datos3$at_factor_uso_de_dispositivoselectronicos<-as.numeric(datos3$at_factor_uso_de_dispositivoselectronicos)
+datos3$at_factor_uso_de_impericia<-as.numeric(datos3$at_factor_uso_de_impericia)
+datos3$at_factor_deslizamiento_de_lodopiedras<-as.numeric(datos3$at_factor_deslizamiento_de_lodopiedras)
+datos3$at_factor_desobedencia_a_la_policia<-as.numeric(datos3$at_factor_desobedencia_a_la_policia)
+datos3$at_factor_no_identifica<-as.numeric(datos3$at_factor_no_identifica)
+datos3$at_factor_otro<-as.numeric(datos3$at_factor_otro)
+datos3$at_tramo_via.Interseccion<-as.numeric(datos3$at_tramo_via.Interseccion)
+datos3$at_tramo_via.Recta<-as.numeric(datos3$at_tramo_via.Recta)
+datos3$at_tramo_via.Curva<-as.numeric(datos3$at_tramo_via.Curva)
+datos3$at_tramo_via.Rotonda<-as.numeric(datos3$at_tramo_via.Rotonda)
+datos3$at_tramo_via.Bifurcacion<-as.numeric(datos3$at_tramo_via.Bifurcacion)
+datos3$at_tramo_via.Otro<-as.numeric(datos3$at_tramo_via.Otro)
+datos3$at_tipo_via.Autopista<-as.numeric(datos3$at_tipo_via.Autopista)
+datos3$at_tipo_via.Carretera<-as.numeric(datos3$at_tipo_via.Carretera)
+datos3$at_tipo_via.Via_Expresa<-as.numeric(datos3$at_tipo_via.Via_Expresa)
+datos3$at_tipo_via.Avenida<-as.numeric(datos3$at_tipo_via.Avenida)
+datos3$at_tipo_via.Calle_jr<-as.numeric(datos3$at_tipo_via.Calle_jr)
+datos3$at_tipo_via.Trocha<-as.numeric(datos3$at_tipo_via.Trocha)
+datos3$at_tipo_via.Otro<-as.numeric(datos3$at_tipo_via.Otro)
+datos3$at_tipo_via.NoIden<-as.numeric(datos3$at_tipo_via.NoIden)
+datos3$at_tipo_de_accidente.Atropello<-as.numeric(datos3$at_tipo_de_accidente.Atropello)
+datos3$at_tipo_de_accidente.AtropelloYfuga<-as.numeric(datos3$at_tipo_de_accidente.AtropelloYfuga)
+datos3$at_tipo_de_accidente.CaidaPasajero<-as.numeric(datos3$at_tipo_de_accidente.CaidaPasajero)
+datos3$at_tipo_de_accidente.Colision<-as.numeric(datos3$at_tipo_de_accidente.Colision)
+datos3$at_tipo_de_accidente.ColisionYfuga<-as.numeric(datos3$at_tipo_de_accidente.ColisionYfuga)
+datos3$at_tipo_de_accidente.Choque<-as.numeric(datos3$at_tipo_de_accidente.Choque)
+datos3$at_tipo_de_accidente.ChoqueYAtropello<-as.numeric(datos3$at_tipo_de_accidente.ChoqueYAtropello)
+datos3$at_tipo_de_accidente.ChoqueYFuga<-as.numeric(datos3$at_tipo_de_accidente.ChoqueYFuga)
+datos3$at_tipo_de_accidente.Despiste<-as.numeric(datos3$at_tipo_de_accidente.Despiste)
+datos3$at_tipo_de_accidente.DespisteYVolcadura<-as.numeric(datos3$at_tipo_de_accidente.DespisteYVolcadura)
+datos3$at_tipo_de_accidente.Volvadura<-as.numeric(datos3$at_tipo_de_accidente.Volvadura)
+datos3$at_tipo_de_accidente.Otro<-as.numeric(datos3$at_tipo_de_accidente.Otro)
+datos3$at_dia_group.dia_s1<-as.numeric(datos3$at_dia_group.dia_s1)
+datos3$at_dia_group.dia_s2<-as.numeric(datos3$at_dia_group.dia_s2)
+datos3$at_dia_group.dia_s3<-as.numeric(datos3$at_dia_group.dia_s3)
+datos3$at_dia_group.dia_s4<-as.numeric(datos3$at_dia_group.dia_s4)
+datos3$at_mes.Ene<-as.numeric(datos3$at_mes.Ene)
+datos3$at_mes.Feb<-as.numeric(datos3$at_mes.Feb)
+datos3$at_mes.Mar<-as.numeric(datos3$at_mes.Mar)
+datos3$at_mes.Abr<-as.numeric(datos3$at_mes.Abr)
+datos3$at_mes.May<-as.numeric(datos3$at_mes.May)
+datos3$at_mes.Jun<-as.numeric(datos3$at_mes.Jun)
+datos3$at_mes.Jul<-as.numeric(datos3$at_mes.Jul)
+datos3$at_mes.Ago<-as.numeric(datos3$at_mes.Ago)
+datos3$at_mes.Set<-as.numeric(datos3$at_mes.Set)
+datos3$at_mes.Oct<-as.numeric(datos3$at_mes.Oct)
+datos3$at_mes.Nov<-as.numeric(datos3$at_mes.Nov)
+datos3$at_mes.Dic<-as.numeric(datos3$at_mes.Dic)
+datos3$at_hora_group.dia<-as.numeric(datos3$at_hora_group.dia)
+datos3$at_hora_group.madrugada<-as.numeric(datos3$at_hora_group.madrugada)
+datos3$at_hora_group.noche<-as.numeric(datos3$at_hora_group.noche)
+datos3$at_hora_group.tarde<-as.numeric(datos3$at_hora_group.tarde)
+datos3$Zona.Lima_Centro<-as.numeric(datos3$Zona.Lima_Centro)
+datos3$Zona.Lima_este<-as.numeric(datos3$Zona.Lima_este)
+datos3$Zona.Lima_moderna<-as.numeric(datos3$Zona.Lima_moderna)
+datos3$Zona.Lima_norte<-as.numeric(datos3$Zona.Lima_norte)
+datos3$Zona.Lima_sur<-as.numeric(datos3$Zona.Lima_sur)
+#datos3$at_fatal<-as.numeric(datos3$at_fatal)
+
+table(datos3$at_fatal)
+str(rfm);dim(datos3)
+rfm<-datos3[,-91]
+# rfm2<-rfm2[,-c(1:11)]
+# rfm3<-rfm3[,-c(1:11)]
+# rfm4<-rfm4[,-c(1:11)]
+#names(rfm)
+#ncol(rfm4)
+#View(rfm1)
+#rfm1<-data.frame(rfm1)
+#rfm1<-apply (as.matrix (rfm1), 2, as.integer)
+qq=as.matrix(rfm)
+#qq1=as.matrix(datos[,-c(1:10)])
+# qq1=as.matrix(rfm1)
+# qq2=as.matrix(rfm2)
+# qq3=as.matrix(rfm3)
+# qq4=as.matrix(rfm4)
+class(qq)
+#str(qq)
+#mode(rfm[,1])
+qq=as(qq,"transactions")
+# qq1=as(qq1,"transactions")
+# qq2=as(qq2,"transactions")
+# qq3=as(qq3,"transactions")
+# qq4=as(qq4,"transactions")
+
+#summary(qq1)
+itemFrequency(qq[,1])
+# itemFrequencyPlot(qq1, type="relative",
+#                   topN=10, # can be changed to the number of interest
+#                   horiz=TRUE,
+#                   col='steelblue3',
+#                   xlab='',
+#                   main='Item frequency, relative') # te muestra el posible support(Punto de corte)
+#class(qq1)
+
+
+rules=apriori(qq,parameter=list(supp=0.8,conf=0.6,minlen=2))
+# rules=apriori(qq2,parameter=list(supp=0.5,conf=0.5,minlen=2))
+# rules=apriori(qq3,parameter=list(supp=0.5,conf=0.5,minlen=2))
+# rules=apriori(qq4,parameter=list(supp=0.5,conf=0.5,minlen=2))
+
+#inspect(rules)
+
+rules.sorted<-sort(rules,by="lift")
+
+
+#rules.sorted<-sort(rules,by="confidence")
+#inspect(head(sort(rules,by="confidence")))
+
+#head(sort(rules,by="lift"),20)
+#plotly_arules(rules)
+#subrules2 <- head(sort(rules, by="confidence"), 20)
+#inspect(subrules2)
+#?is.redundant
+rules
+redundanteRules<-is.redundant(rules)
+redundanteRules
+#summary(redundanteRules)
+rules<-rules[!redundanteRules]
+subset.matrix <- is.subset(rules.sorted,rules.sorted)
+#class(subset.matrix)
+#showMethods("coerce", classes="transactions")
+subset.matrix[lower.tri(subset.matrix,diag=TRUE)] <- FALSE
+redundant <- colSums(subset.matrix,na.rm=T) >= 1
+rules <- rules.sorted[!redundant]
+rules
+plotly_arules(rules)
+plot(rules, method="graph")
+plot(rules, method="graph", control=list(type="itemsets"))
+plot(rules, method="paracoord")
+plot(subrules2, method="paracoord", control=list(reorder=TRUE))
+
+saveAsGraph(head(sort(rules, by="lift"),1300), file="D:/Yanbal_DLO/UBA - MKT - ST 2017 - 2018/1.1 Proyectos de Analytics/2018/03. Sondeo/RFM_all_3_0.8.graphml")
+
+subrules2 <- head(sort(rules, by="confidence"), 20)
+inspect(subrules2)
+#subrules2<-as.data.frame(rules)
+
+
+#write.table(rules, "D:/Yanbal_DLO/proyectos/Plan Data Mining/elizabet okada/RecomendaciónProductos/Ecuador/RFM2_Recomendaciones.csv")
+write(rules,
+      file = "D:/Yanbal_DLO/UBA - MKT - ST 2017 - 2018/1.1 Proyectos de Analytics/2018/03. Sondeo/RFM_all_3_0.8.csv",
+      sep = ",",
+      quote = TRUE,
+      row.names = FALSE)
+
+#rulesMatchLHS <- subset(rules,lhs%ain% a)
+#tr<-as(rulesMatchLHS,"as.data.frame")
+
+
+

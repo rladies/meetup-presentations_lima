@@ -1,0 +1,208 @@
+library(adabag)
+library(MASS)
+library(rminer)
+library(caret)
+library(ROCR)
+library(randomForest)
+library(nnet)
+library(rattle)
+library(rpart)
+library(C50)
+library(neuralnet)
+library(gbm)
+library(RODBC);
+library(qcc);
+library(dplyr);
+library(pROC);
+
+##importar data 
+setwd("C:/Users/jeider/Desktop/Nueva carpeta")
+datos<-read.csv("Variables_corregidas.CSV", sep=";", dec=".", header= T)
+str(datos)
+prop.table(table(datos$flag_fatal))
+###########################################################3
+
+
+
+
+
+
+datos$Mes_AT<-factor(datos$Mes_AT)
+datos$tramo_interseccion<-factor(datos$tramo_interseccion)
+datos$tramo_recta<-factor(datos$tramo_recta)
+datos$may_automovil<-factor(datos$may_automovil)
+datos$may_station_wagon<-factor(datos$may_station_wagon)
+datos$may_camioneta_pickup<-factor(datos$may_camioneta_pickup)
+datos$may_camioneta_rural<-factor(datos$may_camioneta_rural)
+datos$may_camioneta_panel_ofurgoneta<-factor(datos$may_camioneta_panel_ofurgoneta)
+datos$may_omnibus_urbano<-factor(datos$may_omnibus_urbano)
+datos$may_omnibus_interprov<-factor(datos$may_omnibus_interprov)
+datos$may_camion<-factor(datos$may_camion)
+datos$may_tracto_camion<-factor(datos$may_tracto_camion)
+datos$may_remolcdor<-factor(datos$may_remolcdor)
+datos$may_trailer<-factor(datos$may_trailer)
+datos$men_motolineal<-factor(datos$men_motolineal)
+datos$men_motocar<-factor(datos$men_motocar)
+datos$men_triciclo<-factor(datos$men_triciclo)
+datos$men_bici<-factor(datos$men_bici)
+datos$transp_publico<-factor(datos$transp_publico)
+datos$transp_privado<-factor(datos$transp_privado)
+datos$f_exceso_velocidaad<-factor(datos$f_exceso_velocidaad)
+datos$f_desacato_señal_dtrans_cond<-factor(datos$f_desacato_señal_dtrans_cond)
+datos$f_falta_ilumninacion_via<-factor(datos$f_falta_ilumninacion_via)
+datos$f_exceso_carga<-factor(datos$f_exceso_carga)
+datos$f_ebriedad_conductor<-factor(datos$f_ebriedad_conductor)
+datos$f_invasion_carril<-factor(datos$f_invasion_carril)
+datos$f_falla_mecanica<-factor(datos$f_falla_mecanica)
+datos$f_via_en_malestado<-factor(datos$f_via_en_malestado)
+datos$f_desacato_señal_dtrans_peaton<-factor(datos$f_desacato_señal_dtrans_peaton)
+datos$f_ebriedad_peaton<-factor(datos$f_ebriedad_peaton)
+datos$f_climatico<-factor(datos$f_climatico)
+datos$f_señalizacion_defectuosa<-factor(datos$f_señalizacion_defectuosa)
+datos$f_cansancio_conductor<-factor(datos$f_cansancio_conductor)
+datos$f_uso_disp_electr<-factor(datos$f_uso_disp_electr)
+datos$flag_mat<-factor(datos$flag_mat)
+datos$flag_ilesos<-factor(datos$flag_ilesos)
+datos$rango_hora<-factor(datos$rango_hora)
+datos$tipo_at_atropelloyfuga<-factor(datos$tipo_at_atropelloyfuga)
+datos$tipo_at_despiste<-factor(datos$tipo_at_despiste)
+datos$tipo_at_atropello<-factor(datos$tipo_at_atropello)
+datos$ocurrencia_trocha<-factor(datos$ocurrencia_trocha)
+datos$ocurrencia_avenida<-factor(datos$ocurrencia_avenida)
+datos$ocurrencia_carretera<-factor(datos$ocurrencia_carretera)
+datos$ocurrencia_autopista<-factor(datos$ocurrencia_autopista)
+str(datos)
+
+
+
+install.packages("woe")
+library(woe)
+install.packages("stringr")
+library(stringr)
+install.packages("Information")
+library(Information)
+IV <- create_infotables(data=datos, y="flag_fatal", ncore=2)
+IV
+
+
+
+
+
+###########################################################
+datos <- datos[,c(
+  "flag_mat",
+  "Mes_AT",
+  "rango_hora",
+  "ocurrencia_carretera",
+  "ocurrencia_avenida",
+  "may_automovil",
+  "tramo_interseccion",
+  "transp_privado",
+  "tipo_at_atropelloyfuga",
+  "tramo_recta",
+  "transp_publico",
+  "men_motocar",
+  "may_omnibus_urbano",
+  "f_invasion_carril",
+  "f_exceso_velocidaad",
+  "tipo_at_atropello",
+  "may_camioneta_rural",
+  "f_desacato_señal_dtrans_cond",
+  "f_desacato_señal_dtrans_peaton",
+  "may_camion",
+  "flag_fatal")]
+
+
+############################################################
+elimina<-sample(nrow(datos),(nrow(datos)*.7))
+training<-datos[elimina,]
+testing<-datos[-elimina,]
+#################
+training1<-training
+########################
+library(DMwR)
+training1$flag_fatal <- as.factor(training$flag_fatal)
+training_b <- SMOTE(flag_fatal ~ ., training1, perc.over = 10000, perc.under=100)
+table(training_b$flag_fatal)
+
+win.graph()
+par(bg="lightyellow")
+boxplot(datos)
+####################
+
+
+
+
+
+# Codigo para el cross-validation
+
+n <- 10 # Número de réplicas
+k <- 5 # K-Fold
+m <- nrow(datos) # Número de registros
+
+v.error <- rep(0,n)
+v.sens <- rep(0,n)
+v.esp <- rep(0,n)
+v.VPP <- rep(0,n)
+v.VPN <- rep(0,n)
+v.ROC <- rep(0,n)
+
+for (i in 1:n){
+  
+  errori <- 0
+  sensi <- 0
+  espi <- 0
+  VPPi <- 0
+  VPNi <- 0
+  ROCi <- 0
+  
+  grupos <- createFolds(1:m,k)
+  
+  for(j in 1:k){
+    
+    muestra   <- grupos[[j]]
+    ttraining <- datos[-muestra,]
+    ttesting  <- datos[muestra,]
+    
+    
+    ##modelo<-nnet(as.factor(flag_fatal)~.,data=training_b,size=5,skip=FALSE,maxit = 50,abstol = 1.0e-5,decay=0.01)
+    ##predict_m<-predict(modelo,newdata=ttesting)
+    #head(predict_m)
+    
+    modelo <-boosting(flag_fatal~.,data= training_b,boos=TRUE, mfinal=20,coeflearn='Breiman')
+    predict_m <- predict(modelo,ttesting[,-21])
+    predict_m <-(predict_m$prob)[,2]
+    
+    
+    #modelo$importance
+    
+    ## modelo <- randomForest(flag_fatal~.,data=training_b,importance = TRUE, maxnodes=10,mtry=6,ntree=100)
+    ##  predict_m <- predict(modelo,ttesting[,-21],type="prob") # Quitamos la variable de Y
+    ##  head(predict_m)
+    
+    
+    ##modelo <- rpart(flag_fatal ~ .,data=training_b,method="class")
+    ##predict_m <- predict(modelo,ttesting[,-21]) # Quitamos la variable de Y
+    
+    MC      <- table(ttesting[,21],predict_m>0.5) # Matriz de confusión
+    acierto <- sum(diag(MC))/sum(MC)
+    error   <- 1 - acierto
+    errori  <- errori+error
+    sensi   <- MC[2,2]/sum(MC[2,])+sensi
+    espi    <- MC[1,1]/sum(MC[1,])+espi
+    VPPi    <- MC[2,2]/sum(MC[,2])+VPPi
+    VPNi    <- MC[1,1]/sum(MC[,1])+VPNi
+    ROCi    <- auc(ttesting[,21],as.numeric(predict_m>0.5))
+  }
+  
+  v.error[i] <- errori/k
+  v.sens[i] <- sensi/k
+  v.esp[i] <- espi/k
+  v.VPP[i] <- VPPi/k
+  v.VPN[i] <- VPNi/k
+  v.ROC[i] <- 1-ROCi/k
+}
+
+resultado <- data.frame(Error=v.error,Sensibilidad=v.sens,Especificidad=v.esp,VPP=v.VPP,VPN=v.VPN,AreaROC=v.ROC)
+resultado <- mutate(resultado,Gini=(AreaROC-0.5)*2,Dist.Eucli=((VPP-1)^2+(VPN-1)^2)^0.5)
+

@@ -1,0 +1,804 @@
+
+## Paquetes
+
+install.packages("ROSE")
+install.packages("mlr",dependencies = T)
+install.packages("FSelector", dependencies = T)
+install.packages("Rcpp",dependencies = T)
+
+#Función para instalar con todas las dependencias
+getPackages <- function(packs){
+  packages <- unlist(
+    tools::package_dependencies(packs, available.packages(),
+                                which=c("Depends", "Imports"), recursive=TRUE)
+  )
+  packages <- union(packs, packages)
+  packages
+}
+
+packages <- getPackages(c("ROSE"))
+
+download.packages(packages, destdir="C:/Users/miguel_05/Desktop/Sherly/2018-2019/12. Tesis 2019/Exposición en el Banco Pichincha/Research_BP",
+                  type="source")
+
+getwd()
+
+## Librerías
+library(foreign)
+library(dplyr)
+library(ggplot2)
+library(mlr)
+library(DMwR)
+library(ROSE)
+library(rpart)
+library(randomForest)
+library(pROC)
+library(adabag)
+library(caret)
+library(Rccp)
+
+
+
+
+######################
+#  Lectura de datos  #
+######################
+# Accidente de Tránsito (AT) - Censo Nacional de Comisarías 2017
+# Tener presente que los datos que figuran en el INEI son una muestra.
+# El censo fue de las comisarías, mas no de los accidentes.
+
+ #abrimos el paquete foreign con el comando require (intercambiable por library).
+
+data_at_0<- read.spss("A_T_Capitulo 100.sav",use.value.labels=TRUE, max.value.labels=TRUE, to.data.frame=TRUE) #abrimos el archivo en SPSS, activamos los argumentos escribiendo "=TRUE".
+
+data_at<-data_at_0
+ncol(data_at) #Nro características
+nrow(data_at) #Nro registros de accidentes de tránsito a nivel nacional
+head(data_at,3)
+str(data_at)
+
+## Cambiando de nombre a las variables:
+#Solo a las variables asociadas al AT
+
+View(data_at)
+data_at$at_UBIGEO <- data_at$UBIGEO
+data_at$nombre_en_libro <- data_at$AT102
+data_at$at_dia <- data_at$AT103_D
+data_at$at_mes <- data_at$AT103_M
+data_at$at_anio <- data_at$AT103_A
+data_at$at_hora <- data_at$AT103_HOR
+data_at$at_minuto <- data_at$AT103_MIN
+data_at$at_tipo_via <- data_at$AT104A
+data_at$at_tipo_via_otro <- data_at$AT104A_O
+data_at$at_tramo_via <- data_at$AT104B
+data_at$at_tramo_via_otro <- data_at$AT104B_O
+data_at$at_nombre_via_v1 <- data_at$AT104C_V1
+data_at$at_nombre_via_r1 <- data_at$AT104C_R1
+data_at$at_nombre_via_v2 <- data_at$AT104C_V2
+data_at$at_nombre_via_r2 <- data_at$AT104C_R2
+data_at$at_departamento <- data_at$AT104D_DPTO
+data_at$at_provincia <- data_at$AT104D_PROV
+data_at$at_distrito <- data_at$AT104D_DIST
+data_at$at_tipo_de_accidente <- data_at$AT105
+data_at$at_tipo_de_accidente_otro <- data_at$AT105_O
+data_at$at_veh_mayor_involucrado_automovil <- data_at$AT106_1
+data_at$at_veh_mayor_involucrado_automovil_cant <- data_at$AT106_1_CANT
+data_at$at_veh_mayor_involucrado_stationwagon <- data_at$AT106_2
+data_at$at_veh_mayor_involucrado_stationwagon_cant <- data_at$AT106_2_CANT
+data_at$at_veh_mayor_involucrado_camionetapickup <- data_at$AT106_3
+data_at$at_veh_mayor_involucrado_camionetapickup_cant <- data_at$AT106_3_CANT
+data_at$at_veh_mayor_involucrado_camionetarural <- data_at$AT106_4
+data_at$at_veh_mayor_involucrado_camionetarural_cant <- data_at$AT106_4_CANT
+data_at$at_veh_mayor_involucrado_furgoneta <- data_at$AT106_5
+data_at$at_veh_mayor_involucrado_furgoneta_cant <- data_at$AT106_5_CANT
+data_at$at_veh_mayor_involucrado_omnibusurbano <- data_at$AT106_6
+data_at$at_veh_mayor_involucrado_omnibusurbano_cant <- data_at$AT106_6_CANT
+data_at$at_veh_mayor_involucrado_omnibusinterprov <- data_at$AT106_7
+data_at$at_veh_mayor_involucrado_omnibusinterprov_cant <- data_at$AT106_7_CANT
+data_at$at_veh_mayor_involucrado_camion <- data_at$AT106_8
+data_at$at_veh_mayor_involucrado_camion_cant <- data_at$AT106_8_CANT
+data_at$at_veh_mayor_involucrado_remolcador <- data_at$AT106_9
+data_at$at_veh_mayor_involucrado_remolcador_cant <- data_at$AT106_9_CANT
+data_at$at_veh_mayor_involucrado_trailer <- data_at$AT106_10
+data_at$at_veh_mayor_involucrado_trailer_cant <- data_at$AT106_10_CANT
+data_at$at_veh_mayor_involucrado_noidentificado <- data_at$AT106_11
+data_at$at_veh_mayor_involucrado_noidentificado_cant <- data_at$AT106_11_CANT
+data_at$at_veh_mayor_involucrado_otro <- data_at$AT106_12
+data_at$at_veh_mayor_involucrado_otro_nombre <- data_at$AT106_12_O
+data_at$at_veh_mayor_involucrado_otro_cant <- data_at$AT106_12_CANT
+data_at$at_veh_menor_involucrado_motolineal <- data_at$AT106_13
+data_at$at_veh_menor_involucrado_motolineal_cant <- data_at$AT106_13_CANT
+data_at$at_veh_menor_involucrado_mototaxi <- data_at$AT106_14
+data_at$at_veh_menor_involucrado_mototaxi_cant <- data_at$AT106_14_CANT
+data_at$at_veh_menor_involucrado_triciclo <- data_at$AT106_15
+data_at$at_veh_menor_involucrado_triciclo_cant <- data_at$AT106_15_CANT
+data_at$at_veh_menor_involucrado_bicicleta <- data_at$AT106_16
+data_at$at_veh_menor_involucrado_bicicleta_cant <- data_at$AT106_16_CANT
+data_at$at_veh_menor_involucrado_noidentificado <- data_at$AT106_17
+data_at$at_veh_menor_involucrado_noidentificado_cant <- data_at$AT106_17_CANT
+data_at$at_veh_menor_involucrado_otro <- data_at$AT106_18
+data_at$at_veh_menor_involucrado_otro_nombre <- data_at$AT106_18_O
+data_at$at_veh_menor_involucrado_otro_cant <- data_at$AT106_18_CANT
+data_at$at_tipo_transporte_publico <- data_at$AT107_1
+data_at$at_tipo_transporte_particular <- data_at$AT107_2
+data_at$at_tipo_transporte_noidentificado <- data_at$AT107_3
+data_at$at_consecuencia <- data_at$AT108
+data_at$at_num_fallecidos <- data_at$AT108_1
+data_at$at_num_heridos <- data_at$AT108_2
+data_at$at_num_ilesos <- data_at$AT108_3
+data_at$at_factor_excesovelocidad <- data_at$AT109_1
+data_at$at_factor_desobediencia_a_senal_de_transito <- data_at$AT109_2
+data_at$at_factor_faltailuminacion_en_la_via <- data_at$AT109_3
+data_at$at_factor_excesodecarga <- data_at$AT109_4
+data_at$at_factor_ebriedad_conductor <- data_at$AT109_5
+data_at$at_factor_invasion_carril <- data_at$AT109_6
+data_at$at_factor_fallamecanica <- data_at$AT109_7
+data_at$at_factor_via_en_mal_estado <- data_at$AT109_8
+data_at$at_factor_imprudenciadel_peaton <- data_at$AT109_9
+data_at$at_factor_ebriedad_peaton <- data_at$AT109_10
+data_at$at_factor_climatico <- data_at$AT109_11
+data_at$at_factor_senalizacion_defectuosa <- data_at$AT109_12
+data_at$at_factor_casanciodel_conductor <- data_at$AT109_13
+data_at$at_factor_uso_de_dispositivoselectronicos <- data_at$AT109_14
+data_at$at_factor_uso_de_impericia <- data_at$AT109_15
+data_at$at_factor_deslizamiento_de_lodopiedras <- data_at$AT109_16
+data_at$at_factor_desobedencia_a_la_policia <- data_at$AT109_17
+data_at$at_factor_no_identifica <- data_at$AT109_18
+data_at$at_factor_otro <- data_at$AT109_19
+data_at$at_factor_otro_nombra <- data_at$AT109_19_O
+data_at$factor_expansion_2016 <- data_at$Factor_2016
+data_at$factor_expansion_2017 <- data_at$Factor_2017
+
+## Seleccionando variables a trabajar
+ncol(data_at)
+head(data_at[,100:ncol(data_at)],1)
+
+data_at_1 <- data_at[,100:ncol(data_at)]
+
+# write.csv(data_at_1,"data_at_2.csv")
+
+## Definición de variable dependiente
+
+data_at_1$at_fatal<-ifelse(data_at_1$at_consecuencia==1,1,0)
+round(prop.table(table(data_at_1$at_fatal))*100,0)
+
+data_at_1$at_fatal<-as.factor(data_at_1$at_fatal)
+
+## Solo análisis en Lima Metropolitana
+
+# Para ello recodificar UBIGEO donde ocurrió el AT
+
+data_at_1$ubigeo_at_nuevo<- paste(data_at_1$at_departamento,
+                        data_at_1$at_provincia,
+                        data_at_1$at_distrit,sep = "")
+
+
+data_at_1$ubigeo_at_nuevo<-as.numeric(data_at_1$ubigeo_at_nuevo)
+
+#Lectura de datos de ubigeo 
+
+ubigeo_inei<-read.csv("geodir-ubigeo-inei.csv",sep=";")
+head(ubigeo_inei)
+ubigeo_inei$ubigeo_at_nuevo=ubigeo_inei$Ubigeo
+
+data_at_2<-merge(data_at_1,ubigeo_inei,by="ubigeo_at_nuevo")
+
+tot=arrange(as.data.frame(table(data_at_2$Departamento))
+        , desc(Freq))
+
+prop<-function(x){ 
+      round(x/sum(x),3)
+      }
+
+cbind(tot,prop(tot$Freq))
+
+#El análisis abarcará solo a Lima metropolitana ya que concentra cerca al 50% de registros de AT (Aplicando factor de expansión)
+
+data_lima<-subset(data_at_2,data_at_2$Departamento=='Lima' & data_at_2$Provincia=='Lima')
+nrow(data_lima)
+
+#Distribución del target
+
+porcentaje <- round(prop.table(table(data_lima$at_fatal)) * 100,2)
+cbind(freq=table(data_lima$at_fatal), percentage=porcentaje)
+
+
+## Análisis Exploratorio -
+
+colnames(data_lima)
+dim(data_lima)
+as.data.frame(sapply(data_lima,class))
+
+write.csv(data_lima,"data_lima_1.csv")
+
+
+# Eliminando las variables que no afectan al modelo:
+# Ejm: at_anio,at_nombre_via_v1
+# Criterio: 
+
+data_lima_2<-data_lima[,c(
+  "at_dia",
+  "at_mes",
+  "at_hora",
+  "at_tipo_via",
+  "at_tramo_via",
+  "Distrito",
+  "at_distrito",
+  "at_tipo_de_accidente",
+  "at_veh_mayor_involucrado_automovil",
+  "at_veh_mayor_involucrado_stationwagon",
+  "at_veh_mayor_involucrado_camionetapickup",
+  "at_veh_mayor_involucrado_camionetarural",
+  "at_veh_mayor_involucrado_furgoneta",
+  "at_veh_mayor_involucrado_omnibusurbano",
+  "at_veh_mayor_involucrado_omnibusinterprov",
+  "at_veh_mayor_involucrado_camion",
+  "at_veh_mayor_involucrado_remolcador",
+  "at_veh_mayor_involucrado_trailer",
+  "at_veh_mayor_involucrado_noidentificado",
+  "at_veh_mayor_involucrado_otro",
+  "at_veh_menor_involucrado_motolineal",
+  "at_veh_menor_involucrado_mototaxi",
+  "at_veh_menor_involucrado_triciclo",
+  "at_veh_menor_involucrado_bicicleta",
+  "at_veh_menor_involucrado_noidentificado",
+  "at_tipo_transporte_publico",
+  "at_tipo_transporte_particular",
+  "at_tipo_transporte_noidentificado",
+  "at_factor_excesovelocidad",
+  "at_factor_desobediencia_a_senal_de_transito",
+  "at_factor_faltailuminacion_en_la_via",
+  "at_factor_excesodecarga",
+  "at_factor_ebriedad_conductor",
+  "at_factor_invasion_carril",
+  "at_factor_fallamecanica",
+  "at_factor_via_en_mal_estado",
+  "at_factor_imprudenciadel_peaton",
+  "at_factor_ebriedad_peaton",
+  "at_factor_climatico",
+  "at_factor_senalizacion_defectuosa",
+  "at_factor_casanciodel_conductor",
+  "at_factor_uso_de_dispositivoselectronicos",
+  "at_factor_uso_de_impericia",
+  "at_factor_deslizamiento_de_lodopiedras",
+  "at_factor_desobedencia_a_la_policia",
+  "at_factor_no_identifica",
+  "at_factor_otro",
+  "at_fatal"
+)]
+
+dim(data_lima_2)
+head(data_lima_2)
+
+
+
+# Agrupando categorías de variables
+
+
+
+data_lima_2$at_dia_group<-ifelse(as.numeric(data_lima_2$at_dia)<=7,"dia_s1",
+                     ifelse(as.numeric(data_lima_2$at_dia)<=14,"dia_s2",
+                            ifelse(as.numeric(data_lima_2$at_dia)<=21,"dia_s3",
+                                   ifelse(as.numeric(data_lima_2$at_dia)>21,"dia_s4",0)
+                                                                     )
+                                          ))
+
+#prop.table(table(data_lima_2$at_mes_group))
+  
+levels(data_lima_2$at_mes)<-c("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Set","Oct","Nov","Dic","99")
+
+
+data_lima_2$at_hora_group<-ifelse(as.numeric(data_lima_2$at_hora)>=0 & as.numeric(data_lima_2$at_hora)<=5,"madrugada",
+                                 ifelse(as.numeric(data_lima_2$at_hora)>5 & as.numeric(data_lima_2$at_hora)<=11,"dia",
+                                        ifelse(as.numeric(data_lima_2$at_hora)>11 & as.numeric(data_lima_2$at_hora)<=18,"tarde",
+                                               ifelse(as.numeric(data_lima_2$at_hora)>18 & as.numeric(data_lima_2$at_hora)<=23,"noche",0)
+                                        )
+                                 ))
+
+data_lima_2$at_tipo_via<-as.factor(data_lima_2$at_tipo_via)
+data_lima_2$at_tramo_via<-as.factor(data_lima_2$at_tramo_via)
+data_lima_2$at_tipo_de_accidente<-as.factor(data_lima_2$at_tipo_de_accidente)
+
+
+levels(data_lima_2$at_tipo_via)<-c("Autopista","Carretera","Via_Expresa","Avenida","Calle_jr","Trocha","Otro","NoIden")
+levels(data_lima_2$at_tramo_via)<-c("Interseccion","Recta","Curva","Rotonda","Bifurcacion","Otro","NoIden")
+levels(data_lima_2$at_tipo_de_accidente)<-c(
+                        "Atropello","AtropelloYfuga","CaidaPasajero",
+                              "Colision","ColisionYfuga","Choque","ChoqueYAtropello",
+                                    "ChoqueYFuga","Despiste","DespisteYVolcadura","Volvadura","Otro")
+
+data_lima_2$at_dia_group<-as.factor(data_lima_2$at_dia_group)
+data_lima_2$at_mes_group<-as.factor(data_lima_2$at_mes_group)
+data_lima_2$at_hora_group<-as.factor(data_lima_2$at_hora_group)
+
+#Agrupación de distritos de Lima
+#Lectura de datos de zonas 
+
+zonas_lima<-read.csv("Zonas_Lima.csv",sep=";")
+zonas_lima$at_distrito<-as.factor(zonas_lima$at_distrito)
+levels(zonas_lima$at_distrito)[1:9]<-c("01","02","03","04","05","06","07","08","09")
+
+data_lima_3<-merge(data_lima_2,zonas_lima,by="at_distrito")
+data_lima_3$at_fatal
+head(data_lima_3)
+# Generando variables dummies
+
+
+data_lima_4<-createDummyFeatures(data_lima_3, cols = c("at_tramo_via","at_tipo_via","at_tipo_de_accidente","at_dia_group",
+                                               "at_mes","at_hora_group","Zona"))
+
+
+write.csv(data_lima_4,"data_lima_4.csv")
+
+data_lima_4$at_fatal
+
+as.data.frame(sapply(data_lima_4,class))
+
+
+data_lima_5<-data_lima_4[,c(
+  "at_veh_mayor_involucrado_automovil",
+  "at_veh_mayor_involucrado_stationwagon",
+  "at_veh_mayor_involucrado_camionetapickup",
+  "at_veh_mayor_involucrado_camionetarural",
+  "at_veh_mayor_involucrado_furgoneta",
+  "at_veh_mayor_involucrado_omnibusurbano",
+  "at_veh_mayor_involucrado_omnibusinterprov",
+  "at_veh_mayor_involucrado_camion",
+  "at_veh_mayor_involucrado_remolcador",
+  "at_veh_mayor_involucrado_trailer",
+  "at_veh_mayor_involucrado_noidentificado",
+  "at_veh_mayor_involucrado_otro",
+  "at_veh_menor_involucrado_motolineal",
+  "at_veh_menor_involucrado_mototaxi",
+  "at_veh_menor_involucrado_triciclo",
+  "at_veh_menor_involucrado_bicicleta",
+  "at_veh_menor_involucrado_noidentificado",
+  "at_tipo_transporte_publico",
+  "at_tipo_transporte_particular",
+  "at_tipo_transporte_noidentificado",
+  "at_factor_excesovelocidad",
+  "at_factor_desobediencia_a_senal_de_transito",
+  "at_factor_faltailuminacion_en_la_via",
+  "at_factor_excesodecarga",
+  "at_factor_ebriedad_conductor",
+  "at_factor_invasion_carril",
+  "at_factor_fallamecanica",
+  "at_factor_via_en_mal_estado",
+  "at_factor_imprudenciadel_peaton",
+  "at_factor_ebriedad_peaton",
+  "at_factor_climatico",
+  "at_factor_senalizacion_defectuosa",
+  "at_factor_casanciodel_conductor",
+  "at_factor_uso_de_dispositivoselectronicos",
+  "at_factor_uso_de_impericia",
+  "at_factor_deslizamiento_de_lodopiedras",
+  "at_factor_desobedencia_a_la_policia",
+  "at_factor_no_identifica",
+  "at_factor_otro",
+  "at_tramo_via.Interseccion",
+  "at_tramo_via.Recta",
+  "at_tramo_via.Curva",
+  "at_tramo_via.Rotonda",
+  "at_tramo_via.Bifurcacion",
+  "at_tramo_via.Otro",
+  "at_tipo_via.Autopista",
+  "at_tipo_via.Carretera",
+  "at_tipo_via.Via_Expresa",
+  "at_tipo_via.Avenida",
+  "at_tipo_via.Calle_jr",
+  "at_tipo_via.Trocha",
+  "at_tipo_via.Otro",
+  "at_tipo_via.NoIden",
+  "at_tipo_de_accidente.Atropello",
+  "at_tipo_de_accidente.AtropelloYfuga",
+  "at_tipo_de_accidente.CaidaPasajero",
+  "at_tipo_de_accidente.Colision",
+  "at_tipo_de_accidente.ColisionYfuga",
+  "at_tipo_de_accidente.Choque",
+  "at_tipo_de_accidente.ChoqueYAtropello",
+  "at_tipo_de_accidente.ChoqueYFuga",
+  "at_tipo_de_accidente.Despiste",
+  "at_tipo_de_accidente.DespisteYVolcadura",
+  "at_tipo_de_accidente.Volvadura",
+  "at_tipo_de_accidente.Otro",
+  "at_dia_group.dia_s1",
+  "at_dia_group.dia_s2",
+  "at_dia_group.dia_s3",
+  "at_dia_group.dia_s4",
+  "at_mes.Ene",
+  "at_mes.Feb",
+  "at_mes.Mar",
+  "at_mes.Abr",
+  "at_mes.May",
+  "at_mes.Jun",
+  "at_mes.Jul",
+  "at_mes.Ago",
+  "at_mes.Set",
+  "at_mes.Oct",
+  "at_mes.Nov",
+  "at_mes.Dic",
+  "at_hora_group.dia",
+  "at_hora_group.madrugada",
+  "at_hora_group.noche",
+  "at_hora_group.tarde",
+  "Zona.Lima_Centro",
+  "Zona.Lima_este",
+  "Zona.Lima_moderna",
+  "Zona.Lima_norte",
+  "Zona.Lima_sur",
+  "at_fatal"
+)]
+
+data_lima_5$at_veh_mayor_involucrado_automovil<-as.factor(data_lima_5$at_veh_mayor_involucrado_automovil)
+data_lima_5$at_veh_mayor_involucrado_stationwagon<-as.factor(data_lima_5$at_veh_mayor_involucrado_stationwagon)
+data_lima_5$at_veh_mayor_involucrado_camionetapickup<-as.factor(data_lima_5$at_veh_mayor_involucrado_camionetapickup)
+data_lima_5$at_veh_mayor_involucrado_camionetarural<-as.factor(data_lima_5$at_veh_mayor_involucrado_camionetarural)
+data_lima_5$at_veh_mayor_involucrado_furgoneta<-as.factor(data_lima_5$at_veh_mayor_involucrado_furgoneta)
+data_lima_5$at_veh_mayor_involucrado_omnibusurbano<-as.factor(data_lima_5$at_veh_mayor_involucrado_omnibusurbano)
+data_lima_5$at_veh_mayor_involucrado_omnibusinterprov<-as.factor(data_lima_5$at_veh_mayor_involucrado_omnibusinterprov)
+data_lima_5$at_veh_mayor_involucrado_camion<-as.factor(data_lima_5$at_veh_mayor_involucrado_camion)
+data_lima_5$at_veh_mayor_involucrado_remolcador<-as.factor(data_lima_5$at_veh_mayor_involucrado_remolcador)
+data_lima_5$at_veh_mayor_involucrado_trailer<-as.factor(data_lima_5$at_veh_mayor_involucrado_trailer)
+data_lima_5$at_veh_mayor_involucrado_noidentificado<-as.factor(data_lima_5$at_veh_mayor_involucrado_noidentificado)
+data_lima_5$at_veh_mayor_involucrado_otro<-as.factor(data_lima_5$at_veh_mayor_involucrado_otro)
+data_lima_5$at_veh_menor_involucrado_motolineal<-as.factor(data_lima_5$at_veh_menor_involucrado_motolineal)
+data_lima_5$at_veh_menor_involucrado_mototaxi<-as.factor(data_lima_5$at_veh_menor_involucrado_mototaxi)
+data_lima_5$at_veh_menor_involucrado_triciclo<-as.factor(data_lima_5$at_veh_menor_involucrado_triciclo)
+data_lima_5$at_veh_menor_involucrado_bicicleta<-as.factor(data_lima_5$at_veh_menor_involucrado_bicicleta)
+data_lima_5$at_veh_menor_involucrado_noidentificado<-as.factor(data_lima_5$at_veh_menor_involucrado_noidentificado)
+data_lima_5$at_tipo_transporte_publico<-as.factor(data_lima_5$at_tipo_transporte_publico)
+data_lima_5$at_tipo_transporte_particular<-as.factor(data_lima_5$at_tipo_transporte_particular)
+data_lima_5$at_tipo_transporte_noidentificado<-as.factor(data_lima_5$at_tipo_transporte_noidentificado)
+data_lima_5$at_factor_excesovelocidad<-as.factor(data_lima_5$at_factor_excesovelocidad)
+data_lima_5$at_factor_desobediencia_a_senal_de_transito<-as.factor(data_lima_5$at_factor_desobediencia_a_senal_de_transito)
+data_lima_5$at_factor_faltailuminacion_en_la_via<-as.factor(data_lima_5$at_factor_faltailuminacion_en_la_via)
+data_lima_5$at_factor_excesodecarga<-as.factor(data_lima_5$at_factor_excesodecarga)
+data_lima_5$at_factor_ebriedad_conductor<-as.factor(data_lima_5$at_factor_ebriedad_conductor)
+data_lima_5$at_factor_invasion_carril<-as.factor(data_lima_5$at_factor_invasion_carril)
+data_lima_5$at_factor_fallamecanica<-as.factor(data_lima_5$at_factor_fallamecanica)
+data_lima_5$at_factor_via_en_mal_estado<-as.factor(data_lima_5$at_factor_via_en_mal_estado)
+data_lima_5$at_factor_imprudenciadel_peaton<-as.factor(data_lima_5$at_factor_imprudenciadel_peaton)
+data_lima_5$at_factor_ebriedad_peaton<-as.factor(data_lima_5$at_factor_ebriedad_peaton)
+data_lima_5$at_factor_climatico<-as.factor(data_lima_5$at_factor_climatico)
+data_lima_5$at_factor_senalizacion_defectuosa<-as.factor(data_lima_5$at_factor_senalizacion_defectuosa)
+data_lima_5$at_factor_casanciodel_conductor<-as.factor(data_lima_5$at_factor_casanciodel_conductor)
+data_lima_5$at_factor_uso_de_dispositivoselectronicos<-as.factor(data_lima_5$at_factor_uso_de_dispositivoselectronicos)
+data_lima_5$at_factor_uso_de_impericia<-as.factor(data_lima_5$at_factor_uso_de_impericia)
+data_lima_5$at_factor_deslizamiento_de_lodopiedras<-as.factor(data_lima_5$at_factor_deslizamiento_de_lodopiedras)
+data_lima_5$at_factor_desobedencia_a_la_policia<-as.factor(data_lima_5$at_factor_desobedencia_a_la_policia)
+data_lima_5$at_factor_no_identifica<-as.factor(data_lima_5$at_factor_no_identifica)
+data_lima_5$at_factor_otro<-as.factor(data_lima_5$at_factor_otro)
+data_lima_5$at_tramo_via.Interseccion<-as.factor(data_lima_5$at_tramo_via.Interseccion)
+data_lima_5$at_tramo_via.Recta<-as.factor(data_lima_5$at_tramo_via.Recta)
+data_lima_5$at_tramo_via.Curva<-as.factor(data_lima_5$at_tramo_via.Curva)
+data_lima_5$at_tramo_via.Rotonda<-as.factor(data_lima_5$at_tramo_via.Rotonda)
+data_lima_5$at_tramo_via.Bifurcacion<-as.factor(data_lima_5$at_tramo_via.Bifurcacion)
+data_lima_5$at_tramo_via.Otro<-as.factor(data_lima_5$at_tramo_via.Otro)
+data_lima_5$at_tipo_via.Autopista<-as.factor(data_lima_5$at_tipo_via.Autopista)
+data_lima_5$at_tipo_via.Carretera<-as.factor(data_lima_5$at_tipo_via.Carretera)
+data_lima_5$at_tipo_via.Via_Expresa<-as.factor(data_lima_5$at_tipo_via.Via_Expresa)
+data_lima_5$at_tipo_via.Avenida<-as.factor(data_lima_5$at_tipo_via.Avenida)
+data_lima_5$at_tipo_via.Calle_jr<-as.factor(data_lima_5$at_tipo_via.Calle_jr)
+data_lima_5$at_tipo_via.Trocha<-as.factor(data_lima_5$at_tipo_via.Trocha)
+data_lima_5$at_tipo_via.Otro<-as.factor(data_lima_5$at_tipo_via.Otro)
+data_lima_5$at_tipo_via.NoIden<-as.factor(data_lima_5$at_tipo_via.NoIden)
+data_lima_5$at_tipo_de_accidente.Atropello<-as.factor(data_lima_5$at_tipo_de_accidente.Atropello)
+data_lima_5$at_tipo_de_accidente.AtropelloYfuga<-as.factor(data_lima_5$at_tipo_de_accidente.AtropelloYfuga)
+data_lima_5$at_tipo_de_accidente.CaidaPasajero<-as.factor(data_lima_5$at_tipo_de_accidente.CaidaPasajero)
+data_lima_5$at_tipo_de_accidente.Colision<-as.factor(data_lima_5$at_tipo_de_accidente.Colision)
+data_lima_5$at_tipo_de_accidente.ColisionYfuga<-as.factor(data_lima_5$at_tipo_de_accidente.ColisionYfuga)
+data_lima_5$at_tipo_de_accidente.Choque<-as.factor(data_lima_5$at_tipo_de_accidente.Choque)
+data_lima_5$at_tipo_de_accidente.ChoqueYAtropello<-as.factor(data_lima_5$at_tipo_de_accidente.ChoqueYAtropello)
+data_lima_5$at_tipo_de_accidente.ChoqueYFuga<-as.factor(data_lima_5$at_tipo_de_accidente.ChoqueYFuga)
+data_lima_5$at_tipo_de_accidente.Despiste<-as.factor(data_lima_5$at_tipo_de_accidente.Despiste)
+data_lima_5$at_tipo_de_accidente.DespisteYVolcadura<-as.factor(data_lima_5$at_tipo_de_accidente.DespisteYVolcadura)
+data_lima_5$at_tipo_de_accidente.Volvadura<-as.factor(data_lima_5$at_tipo_de_accidente.Volvadura)
+data_lima_5$at_tipo_de_accidente.Otro<-as.factor(data_lima_5$at_tipo_de_accidente.Otro)
+data_lima_5$at_dia_group.dia_s1<-as.factor(data_lima_5$at_dia_group.dia_s1)
+data_lima_5$at_dia_group.dia_s2<-as.factor(data_lima_5$at_dia_group.dia_s2)
+data_lima_5$at_dia_group.dia_s3<-as.factor(data_lima_5$at_dia_group.dia_s3)
+data_lima_5$at_dia_group.dia_s4<-as.factor(data_lima_5$at_dia_group.dia_s4)
+data_lima_5$at_mes.Ene<-as.factor(data_lima_5$at_mes.Ene)
+data_lima_5$at_mes.Feb<-as.factor(data_lima_5$at_mes.Feb)
+data_lima_5$at_mes.Mar<-as.factor(data_lima_5$at_mes.Mar)
+data_lima_5$at_mes.Abr<-as.factor(data_lima_5$at_mes.Abr)
+data_lima_5$at_mes.May<-as.factor(data_lima_5$at_mes.May)
+data_lima_5$at_mes.Jun<-as.factor(data_lima_5$at_mes.Jun)
+data_lima_5$at_mes.Jul<-as.factor(data_lima_5$at_mes.Jul)
+data_lima_5$at_mes.Ago<-as.factor(data_lima_5$at_mes.Ago)
+data_lima_5$at_mes.Set<-as.factor(data_lima_5$at_mes.Set)
+data_lima_5$at_mes.Oct<-as.factor(data_lima_5$at_mes.Oct)
+data_lima_5$at_mes.Nov<-as.factor(data_lima_5$at_mes.Nov)
+data_lima_5$at_mes.Dic<-as.factor(data_lima_5$at_mes.Dic)
+data_lima_5$at_hora_group.dia<-as.factor(data_lima_5$at_hora_group.dia)
+data_lima_5$at_hora_group.madrugada<-as.factor(data_lima_5$at_hora_group.madrugada)
+data_lima_5$at_hora_group.noche<-as.factor(data_lima_5$at_hora_group.noche)
+data_lima_5$at_hora_group.tarde<-as.factor(data_lima_5$at_hora_group.tarde)
+data_lima_5$Zona.Lima_Centro<-as.factor(data_lima_5$Zona.Lima_Centro)
+data_lima_5$Zona.Lima_este<-as.factor(data_lima_5$Zona.Lima_este)
+data_lima_5$Zona.Lima_moderna<-as.factor(data_lima_5$Zona.Lima_moderna)
+data_lima_5$Zona.Lima_norte<-as.factor(data_lima_5$Zona.Lima_norte)
+data_lima_5$Zona.Lima_sur<-as.factor(data_lima_5$Zona.Lima_sur)
+data_lima_5$at_fatal<-as.factor(data_lima_5$at_fatal)
+
+
+dim(data_lima_5)
+
+
+################
+### Modelado ###
+################
+
+#Distribución del target
+
+porcentaje <- round(prop.table(table(data_lima_5$at_fatal)) * 100,2)
+cbind(freq=table(data_lima_5$at_fatal), percentage=porcentaje)
+
+#Partición de la muestra: Training & Testing
+# 70% Training; 30%: Testing 
+
+indice<-sample(nrow(data_lima_5),(nrow(data_lima_5)*.7))
+training<-data_lima_5[indice,]
+testing<-data_lima_5[-indice,]
+
+#Distribución: Training
+porcentaje_tr <- round(prop.table(table(training$at_fatal)) * 100,2)
+cbind(freq=table(training$at_fatal), percentage=porcentaje_tr)
+#Distribución: Testing
+porcentaje_te <- round(prop.table(table(testing$at_fatal)) * 100,2)
+cbind(freq=table(testing$at_fatal), percentage=porcentaje_te)
+
+str(training)
+training$at_fatal <- as.factor(training$at_fatal)
+testing$at_fatal <- as.factor(testing$at_fatal)
+
+table(data_lima_5$at_fatal)
+
+########################
+## Balanceo de datos
+########################
+
+#over sampling
+data_balanced_over <- ovun.sample(at_fatal ~ ., data = data_lima_5, method = "over",N =31398 )$data
+table(data_balanced_over$at_fatal)
+
+#under sampling
+data_balanced_under <- ovun.sample(at_fatal ~ ., data = data_lima_5, method = "under", N = 284, seed = 1)$data
+table(data_balanced_under$at_fatal)
+
+#Both
+data_balanced_both <- ovun.sample(at_fatal ~ ., data = data_lima_5, method = "both", p=0.5, N=31398, seed = 1)$data
+table(data_balanced_both$at_fatal)
+
+#Datos sintéticos Rose
+data.rose <- ROSE(at_fatal ~ ., data = data_lima_5, seed = 1)$data
+table(data.rose$at_fatal)
+
+#Datos sintéticos Smote
+data.smote <- SMOTE(at_fatal ~ ., data_lima_5, perc.over = 5000, perc.under=100)
+table(data.smote$at_fatal)
+
+#Escojamos con cual método de balanceo quedarnos
+
+#build decision tree models
+tree.rose <- rpart(at_fatal ~ ., data = data.rose)
+tree.over <- rpart(at_fatal ~ ., data = data_balanced_over)
+tree.under <- rpart(at_fatal ~ ., data = data_balanced_under)
+tree.both <- rpart(at_fatal ~ ., data = data_balanced_both)
+tree.smote <- rpart(at_fatal ~ ., data = data.smote)
+
+#make predictions on unseen data
+pred.tree.rose <- predict(tree.rose, newdata = testing)
+pred.tree.over <- predict(tree.over, newdata = testing)
+pred.tree.under <- predict(tree.under, newdata = testing)
+pred.tree.both <- predict(tree.both, newdata = testing)
+pred.tree.smote <- predict(tree.smote, newdata = testing)
+
+#AUC ROSE
+roc.curve(testing$at_fatal, pred.tree.rose[,2])
+
+#AUC Oversampling
+roc.curve(testing$at_fatal, pred.tree.over[,2])
+
+#AUC Undersampling
+roc.curve(testing$at_fatal, pred.tree.under[,2])
+
+#AUC Both
+roc.curve(testing$at_fatal, pred.tree.both[,2])
+
+#AUC Smote
+roc.curve(testing$at_fatal, pred.tree.smote[,2])
+
+
+accuracy.meas(testing$at_fatal, pred.tree.rose[,2])
+
+table(testing$at_fatal,ifelse(pred.tree.rose[,2]>0.5,1,0))
+
+confusionMatrix(as.factor(ifelse(pred.tree.rose[,2]>0.5,1,0)),as.factor(testing$at_fatal))
+
+
+
+names(data.smote)
+
+
+
+
+# Método de selección N° 1
+
+as.data.frame(tree.rose$variable.importance)
+
+# Método de selección N° 2
+
+prueba_chi1=function(data)
+{
+  k<-length(data)
+  pval=rep(0,k-1) #creo el array
+  for(i in 1:(k-1))
+    pval[i] <- chisq.test(data[,k],data[,i])$p.value
+  Variables<-names(data[-k])
+  p.value<-pval*100
+  print(data.frame(Variables,p.value))
+}
+
+prueba_chi1(data_lima_5)
+
+
+data_model<-data_lima_5[,c(
+  "at_veh_mayor_involucrado_automovil",
+  "at_factor_invasion_carril",
+  "at_factor_imprudenciadel_peaton",
+  "at_tipo_via.Carretera",
+  "at_tipo_via.Avenida",
+  "at_tipo_de_accidente.Atropello",
+  "at_tipo_de_accidente.AtropelloYfuga",
+  "at_tipo_de_accidente.Colision",
+  "at_tipo_de_accidente.Choque",
+  "at_hora_group.madrugada",
+  "Zona.Lima_moderna",
+  "at_fatal")]
+
+# Método de selección N° 3
+#Resultado de Random forest
+data.smote_1<-data.smote[,c(
+"at_tipo_de_accidente.Atropello",
+"at_factor_imprudenciadel_peaton",
+"Zona.Lima_moderna",
+"at_hora_group.madrugada",
+"at_tipo_via.Carretera",
+"at_factor_invasion_carril",
+"at_tipo_de_accidente.Colision",
+"at_tipo_de_accidente.AtropelloYfuga",
+"at_tipo_de_accidente.ColisionYfuga",
+"Zona.Lima_norte",
+"at_tipo_de_accidente.ChoqueYFuga",
+"at_veh_mayor_involucrado_camionetarural",
+"at_tramo_via.Recta",
+"at_mes.Mar",
+"at_veh_mayor_involucrado_automovil",
+"at_veh_mayor_involucrado_noidentificado",
+"at_factor_uso_de_impericia",
+"at_hora_group.tarde",
+"at_dia_group.dia_s3",
+"Zona.Lima_este",
+"at_tipo_via.Avenida",
+"at_factor_excesovelocidad",
+"at_factor_otro",
+"at_mes.Nov",
+"at_fatal"
+)]
+head(data.smote_1)
+
+
+# Codigo para el cross-validation
+
+n <- 10 # Número de réplicas
+k <- 5 # K-Fold
+m <- nrow(data.smote_1) # Número de registros
+
+v.error <- rep(0,n)
+v.sens <- rep(0,n)
+v.esp <- rep(0,n)
+v.VPP <- rep(0,n)
+v.VPN <- rep(0,n)
+v.ROC <- rep(0,n)
+
+for (i in 1:n){
+  
+  errori <- 0
+  sensi <- 0
+  espi <- 0
+  VPPi <- 0
+  VPNi <- 0
+  ROCi <- 0
+  
+  grupos <- createFolds(1:m,k)
+  
+  for(j in 1:k){
+    
+    muestra   <- grupos[[j]]
+    training <- data.rose[-muestra,]
+    testing  <- data.rose[muestra,]
+    
+    
+    ##modelo<-nnet(as.factor(flag_fatal)~.,data=training_b,size=5,skip=FALSE,maxit = 50,abstol = 1.0e-5,decay=0.01)
+    ##predict_m<-predict(modelo,newdata=ttesting)
+    #head(predict_m)
+    
+    modelo    <- boosting(at_fatal~.,data= training,boos=TRUE, mfinal=9,coeflearn='Breiman')
+    predict_m <- predict(modelo,testing[,-91])
+    predict_m <-(predict_m$prob)[,2]
+    
+    
+    #modelo <- randomForest(at_fatal~.,data=training,importance = TRUE, maxnodes=10,mtry=6,ntree=100)
+    #predict_m <- predict(modelo,testing[,-91],type="prob") # Quitamos la variable de Y
+    #predict_m <-(as.data.frame(predict_m))[,2]
+     
+    
+    #modelo <- rpart(at_fatal ~ .,data=training, method="class")
+    #predict_m <- predict(modelo,testing[,-91]) # Quitamos la variable de Y
+    
+    MC      <- table(testing[,91],predict_m>0.5) # Matriz de confusión
+    acierto <- sum(diag(MC))/sum(MC)
+    error   <- 1 - acierto
+    errori  <- errori+error
+    sensi   <- MC[2,2]/sum(MC[2,])+sensi
+    espi    <- MC[1,1]/sum(MC[1,])+espi
+    VPPi    <- MC[2,2]/sum(MC[,2])+VPPi
+    VPNi    <- MC[1,1]/sum(MC[,1])+VPNi
+    ROCi    <- auc(testing[,23],as.numeric(predict_m>0.5))
+  }
+  
+  
+  v.error[i] <- errori/k
+  v.sens[i] <- sensi/k
+  v.esp[i] <- espi/k
+  v.VPP[i] <- VPPi/k
+  v.VPN[i] <- VPNi/k
+  v.ROC[i] <- 1-ROCi/k
+}
+
+resultado <- data.frame(Error=v.error,Sensibilidad=v.sens,Especificidad=v.esp,VPP=v.VPP,VPN=v.VPN,AreaROC=v.ROC)
+resultado <- mutate(resultado,Gini=(AreaROC-0.5)*2,Dist.Eucli=((VPP-1)^2+(VPN-1)^2)^0.5)
+
+
+
+
+#RF
+importancia=data.frame(importance(modelo))
+library(reshape)
+importancia<-sort_df(importancia,vars='MeanDecreaseGini')
+varImpPlot(modelo,n.var = 15)
+
+
+
+#RF
+importancia=data.frame(modelo$importance)
+library(reshape)
+importancia<-sort_df(importancia,vars='modelo.importance')
+varImpPlot(modelo,n.var = 15)
+
+
+
+
+
+
+
+
+library(ggplot2)
+
+ggplot(data_at_1, aes(data_at_1$at_dia,fill=data_at_1$at_fatal))+
+  geom_bar(position="fill")
+
+ggplot(data_at_1, aes(data_at_1$at_dia,fill=data_at_1$at_fatal))+
+  geom_bar(position="stack")
+
+
+ggplot(data_at_1, aes(data_lima_2$at_mes,fill=data_lima_2$at_fatal))+
+  geom_bar(position="fill")
+ggplot(data_at_1, aes(data_at_1$at_mes,fill=data_at_1$at_fatal))+
+  geom_bar(position="stack")
+
+ggplot(data_at_1, aes(data_at_1$at_tipo_via,fill=data_at_1$at_fatal))+
+  geom_bar(position="fill")
+
+
