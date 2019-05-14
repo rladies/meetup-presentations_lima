@@ -9,10 +9,12 @@ Recursos de R-Ladies Lima.
 1. **Analytics con R**
     - Jueves 09 de mayo de 2019, 7 pm 
     - Café Pichincha, Banco Pichincha
-    1. Credit Risk Scoring como estrategia en la banca masiva: [Adriana Miranda Pilco](https://pe.linkedin.com/in/adriana-miranda-pilco-7854b032), [Jackeline Roxana Palomino](https://pe.linkedin.com/in/jacqueline-roxana-palomino-quispe-59a86b59) 
+    1. Credit Risk Scoring como estrategia en la banca masiva 
+    [Adriana Miranda Pilco](https://pe.linkedin.com/in/adriana-miranda-pilco-7854b032), [Jackeline Roxana Palomino](https://pe.linkedin.com/in/jacqueline-roxana-palomino-quispe-59a86b59) 
         * [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/20190509-RLadiesLima-Meetup1/Ponencia1-CreditRiskScoring/ModeloBuroCliente_RLadies.pdf)
         * [Material Completo (Scripts, Datos)](https://github.com/rladies/meetup-presentations_lima/tree/master/20190509-RLadiesLima-Meetup1/Ponencia1-CreditRiskScoring)
-    2. Machine Learning para identificar factores de influencia de Accidentes de Tránsito Fatales: [Sherly Tarazona Tocto](https://pe.linkedin.com/in/sherly-tarazona-tocto-aab15783)
+    2. Machine Learning para identificar factores de influencia de Accidentes de Tránsito Fatales
+    [Sherly Tarazona Tocto](https://pe.linkedin.com/in/sherly-tarazona-tocto-aab15783)
         * [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/20190509-RLadiesLima-Meetup1/Ponencia2-ATF/Presentación-Research%20ATF.pdf)
         * [Material Completo (Scripts, Datos)](https://github.com/rladies/meetup-presentations_lima/tree/master/20190509-RLadiesLima-Meetup1/Ponencia2-ATF)
 
