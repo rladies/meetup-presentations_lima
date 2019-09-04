@@ -1,5 +1,5 @@
-# Minería de textos científicos: ¿Cómo analizar publicaciones sin leerlas?
-
+# Minería de textos científicos: 
+# ¿Cómo analizar publicaciones sin leerlas?
 
 ## Descripción
 En esta charla se presentará un procedimiento para realizar text mining de artículos científicos en base a un ejemplo sobre un campo de la ciencia, la ecología del movimiento. Se hablará de la identificación de los artículos en la web, descarga de artículos y análisis de datos. Los participantes podrán también realizar una parte del análisis, identificación de temas (topic modeling) para un pequeño conjunto de datos, y realización de nubes de palabras.
@@ -29,8 +29,8 @@ pacman::p_load_gh("trinker/textstem")
 ### Nube de palabras
 
 ```r
-library("wordcloud")
-library(ggwordcloud)
+install.packages("wordcloud")
+install.packages("ggwordcloud")
 ```
 
 ### Paquetes adicionales
