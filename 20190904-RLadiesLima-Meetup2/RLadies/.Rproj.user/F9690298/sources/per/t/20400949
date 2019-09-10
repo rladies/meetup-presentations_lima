@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1567634766713.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "20400949",
+    "lastKnownWriteTime" : 1567634606,
+    "last_content_update" : 1567634766713,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "5A4E885",
+        "caption" : "papers_gamma_short",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=papers_gamma_short&cache_key=5A4E885",
+        "displayedObservations" : 985,
+        "environment" : "",
+        "object" : "papers_gamma_short",
+        "preview" : 0,
+        "totalObservations" : 985,
+        "variables" : 11
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

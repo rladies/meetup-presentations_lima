@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1567633723108.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "453741009",
+    "id" : "3038308A",
+    "lastKnownWriteTime" : 1567634339,
+    "last_content_update" : 1567634339999,
+    "path" : "~/data/postdocFL/MovEco Review/MovEcoReview-Repository/RLadies/CleaningWords_TopicModeling.R",
+    "project_path" : "CleaningWords_TopicModeling.R",
+    "properties" : {
+        "cursorPosition" : "122,0",
+        "scrollLine" : "111"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

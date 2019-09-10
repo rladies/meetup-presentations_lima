@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1567634807442.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "59A48676",
+    "lastKnownWriteTime" : 210944088,
+    "last_content_update" : 1567634807442,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "BCFCDFFE",
+        "caption" : "topics_count",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=topics_count&cache_key=BCFCDFFE",
+        "displayedObservations" : 10,
+        "environment" : "",
+        "object" : "topics_count",
+        "preview" : 0,
+        "totalObservations" : 10,
+        "variables" : 2
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
