@@ -6,13 +6,6 @@ Recursos de R-Ladies Lima.
 
 ## 2019
 
-2. **Minería de textos científicos: ¿Cómo analizar publicaciones sin leerlas?**
-    - Miércoles 04 de setiembre de 2019, 7 pm 
-    - Auditorio FIEECS, Universidad Nacional de Ingeniería
-    - Ponente: [Rocío Joo](https://mablab.org/people/rocio-joo/) 
-        * [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/20190904-RLadiesLima-Meetup2/RladiesLima2019.pdf)
-        * [Material Completo (Scripts, Datos)](https://github.com/rladies/meetup-presentations_lima/tree/master/20190904-RLadiesLima-Meetup2/RLadies)
-
 1. **Analytics con R**
     - Jueves 09 de mayo de 2019, 7 pm 
     - Café Pichincha, Banco Pichincha
@@ -24,6 +17,13 @@ Recursos de R-Ladies Lima.
         * Ponente: [Sherly Tarazona Tocto](https://pe.linkedin.com/in/sherly-tarazona-tocto-aab15783)
         * [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/20190509-RLadiesLima-Meetup1/Ponencia2-ATF/Presentación-Research%20ATF.pdf)
         * [Material Completo (Scripts, Datos)](https://github.com/rladies/meetup-presentations_lima/tree/master/20190509-RLadiesLima-Meetup1/Ponencia2-ATF)
+        
+2. **Minería de textos científicos: ¿Cómo analizar publicaciones sin leerlas?**
+    - Miércoles 04 de setiembre de 2019, 7 pm 
+    - Auditorio FIEECS, Universidad Nacional de Ingeniería
+    - Ponente: [Rocío Joo](https://mablab.org/people/rocio-joo/) 
+        * [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/20190904-RLadiesLima-Meetup2/RladiesLima2019.pdf)
+        * [Material Completo (Scripts, Datos)](https://github.com/rladies/meetup-presentations_lima/tree/master/20190904-RLadiesLima-Meetup2/RLadies)
 
 ## Eventos pasados
 
