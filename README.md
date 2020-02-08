@@ -4,6 +4,17 @@
 
 Recursos de R-Ladies Lima.
 
+## 2020
+
+1. **¿Quieres aprender cómo se aplica R en varios campos?**
+    - Jueves 06 de febrero de 2020, 7 pm 
+    - Auditorio de la Facultad de Ciencias Matemáticas, Universidad Nacional Mayor de San Marcos
+    - Ponente: [PhD. Edith Seier](http://faculty.etsu.edu/seier/) 
+        * [Aventuras con R](https://github.com/rladies/meetup-presentations_lima/blob/master/20200206-RLadiesLima-Meetup1/AventurasConR.pdf)
+        * [Vida académica en EE.UU.](https://github.com/rladies/meetup-presentations_lima/tree/master/20200206-RLadiesLima-Meetup1/VidaAcademicaEEUU.pdf)
+
+## Eventos pasados
+
 ## 2019
 
 1. **Analytics con R**
@@ -24,8 +35,6 @@ Recursos de R-Ladies Lima.
     - Ponente: [Rocío Joo](https://mablab.org/people/rocio-joo/) 
         * [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/20190904-RLadiesLima-Meetup2/RladiesLima2019.pdf)
         * [Material Completo (Scripts, Datos)](https://github.com/rladies/meetup-presentations_lima/tree/master/20190904-RLadiesLima-Meetup2/RLadies)
-
-## Eventos pasados
 
 ## 2018
 
