@@ -75,4 +75,9 @@ Recursos de R-Ladies Lima.
         * [Presentación Andrea](https://github.com/rladies/meetup-presentations_lima/blob/master/20181218-RLadiesLima-Meetup5/Outlier_DataScientist.pdf)
         * [Póster](https://github.com/rladies/meetup-presentations_lima/blob/master/20181206-RLadiesLima-Meetup4/RLadiesLima-Meetup5-Poster.png)
     - [Clausura R-Ladies Lima](https://github.com/rladies/meetup-presentations_lima/blob/master/20181218-RLadiesLima-Meetup5/RLadiesLima-Clausura2018.pdf)
-         
+
+## Otras participaciones
+
+1. **Primera Feria Virtual de Comunidades del Perú**
+    - 28 de marzo 2020, 11 am
+    - [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/Otras%20Participaciones/RLadiesLima-FeriaVirtualComunidades.pdf)
