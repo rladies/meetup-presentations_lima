@@ -13,6 +13,13 @@ Recursos de R-Ladies Lima.
         * [Aventuras con R](https://github.com/rladies/meetup-presentations_lima/blob/master/20200206-RLadiesLima-Meetup1/AventurasConR.pdf)
         * [Vida académica en EE.UU.](https://github.com/rladies/meetup-presentations_lima/tree/master/20200206-RLadiesLima-Meetup1/VidaAcademicaEEUU.pdf)
 
+2. **Analiza Datos Electorales con R**
+    - Sábado 29 de agosto de 2020, 10 am
+    - Taller virtual a través de la plataforma Zoom.
+    - Ponente: [Marylía Cruz](https://pe.linkedin.com/in/marylia-cruz-26a77866)
+        * [Presentación](https://github.com/MaryliaCruzS/TallerRLadiesLima/blob/master/Presentaci%C3%B3n/R-Ladies_Lima_DatosElectorales.pdf)
+        * [Material Completo (Scripts, Datos)](https://github.com/MaryliaCruzS/TallerRLadiesLima)
+
 ## Eventos pasados
 
 ## 2019
