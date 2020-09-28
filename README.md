@@ -20,6 +20,14 @@ Recursos de R-Ladies Lima.
         * [Presentación](https://github.com/MaryliaCruzS/TallerRLadiesLima/blob/master/Presentaci%C3%B3n/R-Ladies_Lima_DatosElectorales.pdf)
         * [Material Completo (Scripts, Datos)](https://github.com/MaryliaCruzS/TallerRLadiesLima)
 
+3. **Workshop Internacional: Mapas Interactivos con R para la Gestión en Salud Pública**
+    - Sábado 26 de setiembre de 2020, 11 am
+    - Taller virtual a través de la plataforma Zoom.
+    - Ponente: [Paula Moraga](https://www.paulamoraga.com/)
+        * [Presentación](https://www.paulamoraga.com/presentation-geospatial-dataviz-es/#1)
+        * [Material del Taller (Tutorial)](https://www.paulamoraga.com/tutorial-areal-data-es/)
+
+
 ## Eventos pasados
 
 ## 2019
