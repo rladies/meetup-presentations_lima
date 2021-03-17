@@ -4,6 +4,18 @@
 
 Recursos de R-Ladies Lima.
 
+## 2021
+
+1. **Modelo de predicción de pase de pedidos en consultoras de belleza**
+    - Sábado 13 de marzo de 2021, 10 am
+    - Meetup virtual a través de la plataforma Zoom.
+    - Ponente: [Karin Rodríguez](https://www.linkedin.com/in/karin-rodriguez-fernandez/)
+        * [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/20210313-RLadiesLima-Meetup1/Presentaci%C3%B3n_Belcorp_PasePedido.pdf)
+        * [Material Completo (Scripts, Datos)](https://github.com/rladies/meetup-presentations_lima/tree/master/20210313-RLadiesLima-Meetup1)
+
+
+## Eventos pasados
+
 ## 2020
 
 1. **¿Quieres aprender cómo se aplica R en varios campos?**
@@ -26,9 +38,6 @@ Recursos de R-Ladies Lima.
     - Ponente: [Paula Moraga](https://www.paulamoraga.com/)
         * [Presentación](https://www.paulamoraga.com/presentation-geospatial-dataviz-es/#1)
         * [Material del Taller (Tutorial)](https://www.paulamoraga.com/tutorial-areal-data-es/)
-
-
-## Eventos pasados
 
 ## 2019
 
