@@ -13,6 +13,13 @@ Recursos de R-Ladies Lima.
         * [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/20210313-RLadiesLima-Meetup1/Presentaci%C3%B3n_Belcorp_PasePedido.pdf)
         * [Material Completo (Scripts, Datos)](https://github.com/rladies/meetup-presentations_lima/tree/master/20210313-RLadiesLima-Meetup1)
 
+2. **No más perdido con los datos perdidos**
+    - Sábado 24 de abril de 2021, 10 am
+    - Meetup virtual a través de la plataforma Zoom.
+    - Ponente: [Estephani Rivera](https://www.linkedin.com/in/estephani-rivera-jaramillo-83224146/)
+        * [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/20210424-RLadiesLima-Meetup2/Presentaci%C3%B3n_Datos_Perdidos_RLadies_ER.pdf)
+        * [Material Completo (Scripts, Datos)](https://github.com/rladies/meetup-presentations_lima/tree/master/20210424-RLadiesLima-Meetup2)
+        
 
 ## Eventos pasados
 
