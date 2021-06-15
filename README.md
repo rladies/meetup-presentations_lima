@@ -19,6 +19,12 @@ Recursos de R-Ladies Lima.
     - Ponente: [Estephani Rivera](https://www.linkedin.com/in/estephani-rivera-jaramillo-83224146/)
         * [Presentación](https://github.com/rladies/meetup-presentations_lima/blob/master/20210424-RLadiesLima-Meetup2/Presentaci%C3%B3n_Datos_Perdidos_RLadies_ER.pdf)
         * [Material Completo (Scripts, Datos)](https://github.com/rladies/meetup-presentations_lima/tree/master/20210424-RLadiesLima-Meetup2)
+
+3. **Simulación de tiempos de espera en cola en agencias, usando herramientas de tidyverse**
+    - Sábado 29 de mayo de 2021, 4 pm
+    - Taller virtual a través de la plataforma Zoom.
+    - Ponente: [Ana Paula Rojas Cruz](https://pe.linkedin.com/in/ana-paula-rojas-939407137)
+        * [Material Completo (Scripts, Datos)](https://github.com/anapaularg/caso-simulacioncolas-presrladies)
         
 
 ## Eventos pasados
