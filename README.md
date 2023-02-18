@@ -5,7 +5,7 @@
 Recursos de R-Ladies Lima.
 
 ## 2023
-1. **No más perdido con los datos perdidos**
+1. **Modelo de Regresión con Datos de Panel**
     - Sábado 18 de febrero de 2023, 4 pm
     - Meetup virtual a través de la plataforma Zoom.
     - Ponente: [Luisa Ames](https://www.linkedin.com/in/luisa-fernanda-ames-santill%C3%A1n-33032513b/)
