@@ -4,6 +4,26 @@
 
 Recursos de R-Ladies Lima.
 
+## 2023
+1. **No más perdido con los datos perdidos**
+    - Sábado 18 de febrero de 2023, 4 pm
+    - Meetup virtual a través de la plataforma Zoom.
+    - Ponente: [Luisa Ames](https://www.linkedin.com/in/luisa-fernanda-ames-santill%C3%A1n-33032513b/)
+        * [Presentación]( )
+        * [Material Completo (Scripts, Datos)]( )
+
+## 2022
+1. **Introducción a RMarkdown - R & Python**
+    - Sábado 25 de junio de 2022, 10 am
+    - Meetup virtual a través de la plataforma Zoom.
+    - Ponente: [Ana Vargas](https://www.linkedin.com/in/ana-vargas-valerio-225118205/)
+        * Video: [youtube](https://www.youtube.com/watch?v=Icxpw6R3aiY&t=3815s&ab_channel=R-LadiesLima) 
+    
+2. **Grupo de estudio "Mastering Shiny**
+    - Conjunto de 6 sesiones (talleres) [grabación](https://www.youtube.com/@RLadiesLima)
+    - Meetup virtual a través de la plataforma Zoom.
+    - Ponente: [Lucio Fernandez](https://www.linkedin.com/in/lucio-cornejo-8a2892246/)
+
 ## 2021
 
 1. **Modelo de predicción de pase de pedidos en consultoras de belleza**
