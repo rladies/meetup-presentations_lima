@@ -9,8 +9,7 @@ Recursos de R-Ladies Lima.
     - Sábado 18 de febrero de 2023, 4 pm
     - Meetup virtual a través de la plataforma Zoom.
     - Ponente: [Luisa Ames](https://www.linkedin.com/in/luisa-fernanda-ames-santill%C3%A1n-33032513b/)
-        * [Presentación]( )
-        * [Material Completo (Scripts, Datos)]( )
+        * [Materiales (Scripts, presentación)](https://github.com/rladies/meetup-presentations_lima/tree/master/20230218-RLadiesLima-Meetup1)
 
 ## 2022
 1. **Introducción a RMarkdown - R & Python**
