@@ -15,7 +15,7 @@ Recursos de R-Ladies Lima.
     - Sábado 17 de junio de 2023, 3 pm
     - Meetup virtual a través de la plataforma Zoom.
     - Ponente: [Jacquelin Flor Baldeón](https://www.linkedin.com/in/jacquelinflorbaldeon/)
-        * [Materiales (Scripts, presentación)](https://github.com/rladies/meetup-presentations_lima/tree/master/20230218-RLadiesLima-Meetup1)
+        * [Materiales (Scripts, presentación, dataset)](https://github.com/rladies/meetup-presentations_lima/tree/master/20230617-RLadiesLima-Meetup-2)
 
 ## 2022
 1. **Introducción a RMarkdown - R & Python**
