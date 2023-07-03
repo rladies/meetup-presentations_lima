@@ -11,6 +11,12 @@ Recursos de R-Ladies Lima.
     - Ponente: [Luisa Ames](https://www.linkedin.com/in/luisa-fernanda-ames-santill%C3%A1n-33032513b/)
         * [Materiales (Scripts, presentación)](https://github.com/rladies/meetup-presentations_lima/tree/master/20230218-RLadiesLima-Meetup1)
 
+2. **Clustering con R: Casos de aplicación**
+    - Sábado 17 de junio de 2023, 3 pm
+    - Meetup virtual a través de la plataforma Zoom.
+    - Ponente: [Jacquelin Flor Baldeón](https://www.linkedin.com/in/jacquelinflorbaldeon/)
+        * [Materiales (Scripts, presentación)](https://github.com/rladies/meetup-presentations_lima/tree/master/20230218-RLadiesLima-Meetup1)
+
 ## 2022
 1. **Introducción a RMarkdown - R & Python**
     - Sábado 25 de junio de 2022, 10 am
