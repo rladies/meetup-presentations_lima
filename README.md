@@ -31,7 +31,7 @@ Recursos de R-Ladies Lima.
          * [Mariela Sánchez](https://www.linkedin.com/in/mariela-s-5a28911b4/)
    - Materiales:
          * Video: [youtube](https://www.youtube.com/watch?v=AvLVYcS0cXc&ab_channel=R-LadiesLima)
-         * Material: [script|dataset|presentación](https://github.com/fvillafuertech/meetup_rladies_tidymodels)
+         * Material: [Script,dataset,presentación](https://github.com/fvillafuertech/meetup_rladies_tidymodels)
 
 
 ## 2022
