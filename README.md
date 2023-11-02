@@ -17,6 +17,23 @@ Recursos de R-Ladies Lima.
     - Ponente: [Jacquelin Flor Baldeón](https://www.linkedin.com/in/jacquelinflorbaldeon/)
         * [Materiales (Scripts, presentación, dataset)](https://github.com/rladies/meetup-presentations_lima/tree/master/20230617-RLadiesLima-Meetup-2)
 
+3. **Roles en la Gobernanza de Datos**
+    - Sábado 17 de julio de 2023, 3 pm
+    - Meetup virtual a través de la plataforma Zoom.
+    - Ponente: [Jacquelin Flor Baldeón](https://www.linkedin.com/in/jacquelinflorbaldeon/)
+         * Video: [youtube](https://www.youtube.com/watch?v=ojFDV3Y5xWk&ab_channel=R-LadiesLima) 
+
+4. **Modelos de Machine Learning utilizando Tidymodels**
+    - Sábado 14 de octubre de 2023, 3 pm
+    - Meetup virtual a través de la plataforma Zoom.
+    - Ponentes:
+         * [Frank Villafuerte](https://www.linkedin.com/in/fvillafuertech/)
+         * [Mariela Sánchez](https://www.linkedin.com/in/mariela-s-5a28911b4/)
+   - Materiales:
+         * Video: [youtube](https://www.youtube.com/watch?v=AvLVYcS0cXc&ab_channel=R-LadiesLima)
+         * Material: [script|dataset|presentación](https://github.com/fvillafuertech/meetup_rladies_tidymodels)
+
+
 ## 2022
 1. **Introducción a RMarkdown - R & Python**
     - Sábado 25 de junio de 2022, 10 am
