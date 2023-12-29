@@ -38,6 +38,7 @@ Recursos de R-Ladies Lima.
     - Meetup virtual a través de la plataforma Zoom.
     - Ponente: [Sherly Tarazona](https://www.linkedin.com/in/sherlytarazonatocto/)
          * Video: [youtube](https://www.youtube.com/watch?v=p64huGH-rY8&t=878s)
+         * Materiales: [Script,dataset,presentación](https://github.com/rladies/meetup-presentations_lima/tree/master/20231214-RLadiesLima-Meetup-5)
            
 ## 2022
 1. **Introducción a RMarkdown - R & Python**
