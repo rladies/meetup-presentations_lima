@@ -1,0 +1,26 @@
+num;tramo;splits;splits_origin;records_count;event_count;default_rate;summary_name;feature
+1;1;<= 1;<= 1;638141;66343;0.103962917;max_cant_ent_csdirecto_1_6m;Número de entidades
+2;2;<= 3;<= 3;204678;33969;0.165963123;max_cant_ent_csdirecto_1_6m;Número de entidades
+3;3;> 3;> 3;78526;18372;0.233960726;max_cant_ent_csdirecto_1_6m;Número de entidades
+4;;Special;Special;0;0;-;max_cant_ent_csdirecto_1_6m;Número de entidades
+6;1;<= 22.5;<= 22.5;87395;16224;0.185639911;edad_01m;Edad
+7;2;<= 24.5;<= 24.5;52048;8989;0.172705964;edad_01m;Edad
+8;3;<= 27.5;<= 27.5;73535;11408;0.15513701;edad_01m;Edad
+9;4;<= 29.5;<= 29.5;46931;6509;0.138692975;edad_01m;Edad
+10;5;<= 35.5;<= 35.5;138614;17649;0.127324801;edad_01m;Edad
+11;6;<= 38.5;<= 38.5;63073;7593;0.120384317;edad_01m;Edad
+12;7;<= 41.5;<= 41.5;58376;6772;0.116006578;edad_01m;Edad
+13;8;<= 46.5;<= 46.5;87737;9404;0.10718397;edad_01m;Edad
+14;9;<= 49.5;<= 49.5;46504;4653;0.100055909;edad_01m;Edad
+15;10;> 49.5;> 49.5;195356;18487;0.094632363;edad_01m;Edad
+16;;Special;Special;0;0;-;edad_01m;Edad
+17;11;Sin dato;Missing;71776;10996;0.153198841;edad_01m;Edad
+39;1;<= 16.5;<= 16.5;420931;59921;0.142353497;antiguedad_01m;Antigüedad en el sistema financiero
+40;2;<= 28.5;<= 28.5;74905;10400;0.138842534;antiguedad_01m;Antigüedad en el sistema financiero
+41;3;<= 36.5;<= 36.5;70196;8216;0.117043706;antiguedad_01m;Antigüedad en el sistema financiero
+42;4;> 36.5;> 36.5;355313;40147;0.112990518;antiguedad_01m;Antigüedad en el sistema financiero
+43;;Special;Special;0;0;-;antiguedad_01m;Antigüedad en el sistema financiero
+61;1;<= 0.5;<= 0.5;842970;99938;0.118554634;max_dias_mora_ssff_12m;Máximo días de mora Últ.12m
+62;2;> 0.5;> 0.5;76079;18467;0.242734526;max_dias_mora_ssff_12m;Máximo días de mora Últ.12m
+63;;Special;Special;0;0;-;max_dias_mora_ssff_12m;Máximo días de mora Últ.12m
+64;3;Sin Deuda;Missing;2296;279;0.121515679;max_dias_mora_ssff_12m;Máximo días de mora Últ.12m
