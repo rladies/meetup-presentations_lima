@@ -33,8 +33,8 @@ Recursos de R-Ladies Lima.
          * Video: [youtube](https://www.youtube.com/watch?v=AvLVYcS0cXc&ab_channel=R-LadiesLima)
          * Material: [Script,dataset,presentación](https://github.com/fvillafuertech/meetup_rladies_tidymodels)
 
-5. **Roles en la Gobernanza de Datos**
-    - Sábado 14 de diciembre de 2023, 3 pm
+5. **De hojas de cálculo a scripts: Razones para adoptar R sobre Excels**
+    - 14 de diciembre de 2023, 8 pm
     - Meetup virtual a través de la plataforma Zoom.
     - Ponente: [Sherly Tarazona](https://www.linkedin.com/in/sherlytarazonatocto/)
          * Video: [youtube](https://www.youtube.com/watch?v=p64huGH-rY8&t=878s)
